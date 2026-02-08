@@ -1,0 +1,6 @@
+Book|Umni|Nope|True|None
+Book|NotUmni|Yes|True|None
+Book|LOL|BIT|True|None
+Book|LOLOLOL|TRO|True|None
+User|Man|
+Librarian|LibMan
