@@ -1,6 +1,5 @@
 import os
 
-# Абстрактный базовый класс для всех сущностей
 class Entity:
     def __init__(self, name):
         self._name = name
@@ -16,6 +15,7 @@ class Entity:
         pass
 
 # Классы
+
 class Book(Entity):
     def __init__(self, name, author, status):
         super().__init__(name)
@@ -64,7 +64,7 @@ class Library:
     def _save_data(self):
         try:
             
-            temp_filename = self._filesavename + "TEMP"  # КРИТИЧЕСКОЕ: исправлено self.filesavename на self._filesavename
+            temp_filename = self._filesavename + "TEMP"  
 
             with open(temp_filename, 'w', encoding='utf-8') as f:
                 
@@ -124,14 +124,14 @@ class Library:
     def addBook(self, librarian):
         OpStatus = False
         for librarian1 in self._librarianlist:
-            if librarian == librarian1.name():  # КРИТИЧЕСКОЕ: добавлены скобки для вызова метода
+            if librarian == librarian1.name(): 
                 OpStatus = True
                 print("-----Новая Книга-----")
                 NameI = input("Введите название книги")
                 AuthorI = input("Введите автора книги")
                 StatusI = True
                 AddedBook = Book(NameI, AuthorI, StatusI)
-                self._booklist.append(AddedBook)  # КРИТИЧЕСКОЕ: исправлено self.booklist на self._booklist
+                self._booklist.append(AddedBook) 
                 print(f"\n Книга {NameI} Добавлена")
                 input()
                 break
@@ -146,17 +146,17 @@ class Library:
         Nfound = True
         OpStatus = False
         for librarian1 in self._librarianlist:
-            if librarian == librarian1.name():  # КРИТИЧЕСКОЕ: добавлены скобки для вызова метода
+            if librarian == librarian1.name():
                 OpStatus = True
                 print("-----Удаление Книги-----")
                 NameD = input("Введите название книги: ")
                 for i, Book in enumerate(self._booklist):
-                    if Book.name() == NameD:  # КРИТИЧЕСКОЕ: добавлены скобки для вызова метода
+                    if Book.name() == NameD:
                         deleted = self._booklist.pop(i)
                         for user in self._userlist:
-                            for i, book in enumerate(user.borrowlist()):  # КРИТИЧЕСКОЕ: добавлены скобки
-                                if book == deleted.name():  # КРИТИЧЕСКОЕ: добавлены скобки
-                                    user.borrowlist().pop(i)  # КРИТИЧЕСКОЕ: это создаст ошибку, но оставляем как есть
+                            for i, book in enumerate(user.borrowlist()): 
+                                if book == deleted.name():
+                                    user.borrowlist().pop(i) 
                         print(f"Книга: {NameD} Удалена")
                         input()
                         Nfound = False
@@ -173,13 +173,12 @@ class Library:
     def viewBooks(self, librarian):
         OpStatus = False
         for librarian1 in self._librarianlist:
-            if librarian == librarian1.name():  # КРИТИЧЕСКОЕ: добавлены скобки
-                OpStatus = True
+            if librarian == librarian1.name():  
                 for Book in self._booklist:
-                    print(f"Название: {Book.name()}")  # КРИТИЧЕСКОЕ: добавлены скобки
-                    print(f"Автор: {Book.author()}")  # КРИТИЧЕСКОЕ: добавлены скобки
-                    print(f"Свободна?: {Book.status()}")  # КРИТИЧЕСКОЕ: добавлены скобки
-                    print(f"Кем Занята?: {Book.belong()} \n")  # КРИТИЧЕСКОЕ: добавлены скобки
+                    print(f"Название: {Book.name()}") 
+                    print(f"Автор: {Book.author()}") 
+                    print(f"Свободна?: {Book.status()}") 
+                    print(f"Кем Занята?: {Book.belong()} \n")  
                     input()
         if OpStatus == True:
             return
@@ -190,13 +189,12 @@ class Library:
     def userAdd(self, librarian):
         OpStatus = False
         for librarian1 in self._librarianlist:
-            if librarian == librarian1.name():  # КРИТИЧЕСКОЕ: добавлены скобки
+            if librarian == librarian1.name(): 
                 OpStatus = True
                 print("-----Новый Пользователь-----")
                 NameU = input("Введите имя пользователя: ")
                 AddedUser = User(NameU)
-                self._userlist.append(AddedUser)  # КРИТИЧЕСКОЕ: исправлено self.userlist на self._userlist
-                print(f"Пользователь: {NameU} Добавлен")
+                self._userlist.append(AddedUser) 
                 input()
         if OpStatus == True:
             return
@@ -207,10 +205,10 @@ class Library:
     def viewUsers(self, librarian):
         OpStatus = False
         for librarian1 in self._librarianlist:
-            if librarian == librarian1.name():  # КРИТИЧЕСКОЕ: добавлены скобки
+            if librarian == librarian1.name(): 
                 OpStatus = True
                 for User in self._userlist:
-                    print(f"Имя Пользователя: {User.name()} \n")  # КРИТИЧЕСКОЕ: добавлены скобки
+                    print(f"Имя Пользователя: {User.name()} \n")  
                     input()
         if OpStatus == True:
             return
@@ -221,22 +219,22 @@ class Library:
     def viewFree(self):
         print("---- Список свободных книг: ----")
         for Book in self._booklist:
-            if Book.status() == 1:  # КРИТИЧЕСКОЕ: добавлены скобки
-                print(f"Название: {Book.name()}")  # КРИТИЧЕСКОЕ: добавлены скобки
-                print(f"Автор: {Book.author()}")  # КРИТИЧЕСКОЕ: добавлены скобки
+            if Book.status() == 1: 
+                print(f"Название: {Book.name()}") 
+                print(f"Автор: {Book.author()}") 
                 input()
 
     def BorrowBook(self, user):
         Nfound = True
         for user1 in self._userlist:
-            if user1.name() == user:  # КРИТИЧЕСКОЕ: добавлены скобки
+            if user1.name() == user: 
                 print("---- Выбор книги ----")
                 Borrow = input("Напишите какую книгу вы хотите забрать: ")
                 for Book in self._booklist:
-                    if Book.name() == Borrow and Book.status() == True:  # КРИТИЧЕСКОЕ: добавлены скобки
+                    if Book.name() == Borrow and Book.status() == True: 
                         Book.status = False
                         Book.belong = user1.name()
-                        user1.borrowlist().append(Borrow)  # КРИТИЧЕСКОЕ: это вызовет ошибку
+                        user1.borrowlist().append(Borrow) 
                         print(f"Книга: {Borrow} Выдана")
                         Nfound = False
                         input()
@@ -247,28 +245,28 @@ class Library:
 
     def BorrowView(self, user):
         for user1 in self._userlist:
-            if user1.name() == user:  # КРИТИЧЕСКОЕ: добавлены скобки
+            if user1.name() == user:  
                 print("---- Список выданых книг: ----")
-                for Book in user1.borrowlist():  # КРИТИЧЕСКОЕ: добавлены скобки
+                for Book in user1.borrowlist():  
                     print(f"Одолжена книга: {Book}")
                     input()
 
     def Return(self, user):
         Nfound = True
         for user1 in self._userlist:
-            if user1.name() == user:  # КРИТИЧЕСКОЕ: добавлены скобки
+            if user1.name() == user: 
                 print("---- Возращение книги ----")
                 BB = input("Напишите какую книгу вы вернуть: ")
-                for i, Book in enumerate(user1.borrowlist()):  # КРИТИЧЕСКОЕ: добавлены скобки
+                for i, Book in enumerate(user1.borrowlist()): 
                     for BookName in self._booklist:
-                        if Book == BookName.name():  # КРИТИЧЕСКОЕ: добавлены скобки
+                        if Book == BookName.name(): 
                             if BookName.name() == BB and BookName.status() == False and BookName.belong() == user1.name():  # КРИТИЧЕСКОЕ: добавлены скобки
                                 for BookI in self._booklist:
-                                    if BookI.name() == BB:  # КРИТИЧЕСКОЕ: добавлены скобки
+                                    if BookI.name() == BB: 
                                         BookI.status = True
                                         BookI.belong = "None"
                                         break
-                                user1.borrowlist().pop(i)  # КРИТИЧЕСКОЕ: это вызовет ошибку
+                                user1.borrowlist().pop(i) 
                                 print(f"Книга: {BB} Отдана")
                                 Nfound = False
                                 input()
@@ -278,12 +276,10 @@ class Library:
                         input()
 
 
-# Абстрактный класс для пользователей библиотеки
 class LibraryUser(Entity):
     def __init__(self, name):
         super().__init__(name)
     
-    # Полиморфный метод с pass
     def get_role(self):
         pass
 
@@ -296,7 +292,7 @@ class Librarians(LibraryUser):
         return "Библиотекарь"
 
     def to_Savestate(self):
-        return f"Librarian|{self._name}"  # КРИТИЧЕСКОЕ: исправлено self.name на self._name
+        return f"Librarian|{self._name}"
     
     @classmethod
     def to_Loadstate(cls, line):
@@ -327,7 +323,7 @@ class User(LibraryUser):
         if len(parts) >= 3 and parts[0] == "User":
             user = cls(parts[1])
             if parts[2]: 
-                user._borrowlist = parts[2].split(',')  # КРИТИЧЕСКОЕ: исправлено borrowlist на _borrowlist
+                user._borrowlist = parts[2].split(',') 
             return user
         return None
 
@@ -354,53 +350,50 @@ try:
             while LoginLoop:
                 print("Введите ваше Имя")
                 LoginName = input()
-                for Librarian in Library1._librarianlist:  # КРИТИЧЕСКОЕ: исправлено librarianlist на _librarianlist
-                    found = Librarian.name() == LoginName  # КРИТИЧЕСКОЕ: добавлены скобки
-                    if found:
-                        LoginLoop = False
-                        print(f"Добро Пожаловать {LoginName}")
-                        # Демонстрация полиморфизма
-                        if isinstance(Librarian, LibraryUser):
-                            print(f"Ваша роль: {Librarian.get_role()}")
-                        while AllTimeLoop:
-                            print("Выберите действие (числом):")
-                            print("1. Добавить книгу в библиотеку \n" \
-                            "2. Удалить книгу из библиотеки \n" \
-                            "3. Зарегестрировать нового пользователя \n" \
-                            "4. посмотреть список пользователей \n" \
-                            "5. посмотреть список книг и их статусы \n" \
-                            "0. Выйти")
-                            Act = int(input())
-                            if Act == 1:
-                                Library1.addBook(LoginName)
-                            elif Act == 2:
-                                Library1.delBook(LoginName)
-                            elif Act == 3:
-                                Library1.userAdd(LoginName)
-                            elif Act == 4:
-                                Library1.viewUsers(LoginName)
-                            elif Act == 5:
-                                Library1.viewBooks(LoginName)
-                            elif Act == 0:
-                                print("Выход..")
-                                Library1._save_data()  # КРИТИЧЕСКОЕ: исправлено save_data на _save_data
-                                AllTimeLoop = False
-                                break
-                            else:
-                                print("Некорректный ввод")
-                    else:
-                        print("Логин не найден, попробуйте ещё раз")
+                for Librarian in Library1._librarianlist: 
+                    found = Librarian.name() == LoginName  
+                    LoginLoop = False
+                    print(f"Добро Пожаловать {LoginName}")
+                    if isinstance(Librarian, LibraryUser):
+                        print(f"Ваша роль: {Librarian.get_role()}")
+                    while AllTimeLoop:
+                        print("Выберите действие (числом):")
+                        print("1. Добавить книгу в библиотеку \n" \
+                        "2. Удалить книгу из библиотеки \n" \
+                        "3. Зарегестрировать нового пользователя \n" \
+                        "4. посмотреть список пользователей \n" \
+                        "5. посмотреть список книг и их статусы \n" \
+                        "0. Выйти")
+                        Act = int(input())
+                        if Act == 1:
+                            Library1.addBook(LoginName)
+                        elif Act == 2:
+                            Library1.delBook(LoginName)
+                        elif Act == 3:
+                            Library1.userAdd(LoginName)
+                        elif Act == 4:
+                            Library1.viewUsers(LoginName)
+                        elif Act == 5:
+                            Library1.viewBooks(LoginName)
+                        elif Act == 0:
+                            print("Выход..")
+                            Library1._save_data()
+                            AllTimeLoop = False
+                            break
+                        else:
+                            print("Некорректный ввод")
+                else:
+                    print("Логин не найден, попробуйте ещё раз")
         elif Role == 2:
             RoleLoop = False
             while LoginLoop:
                 print("Введите ваше Имя")
                 LoginName = input()
-                for user in Library1._userlist:  # КРИТИЧЕСКОЕ: исправлено userlist на _userlist
-                    found = user.name() == LoginName  # КРИТИЧЕСКОЕ: добавлены скобки
+                for user in Library1._userlist: 
+                    found = user.name() == LoginName 
                     if found:
                         LoginLoop = False
                         print(f"Добро Пожаловать {LoginName}")
-                        # Демонстрация полиморфизма
                         if isinstance(user, LibraryUser):
                             print(f"Ваша роль: {user.get_role()}")
                         while AllTimeLoop:
@@ -421,8 +414,7 @@ try:
                                 Library1.BorrowView(LoginName)
                             elif Act == 0:
                                 print("Выход..")
-                                Library1._save_data()  # КРИТИЧЕСКОЕ: исправлено save_data на _save_data
-                                AllTimeLoop = False
+                                Library1._save_data()
                                 break
                             else:
                                 print("Некорректный ввод")
